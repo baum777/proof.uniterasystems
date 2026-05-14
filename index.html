@@ -1,0 +1,2067 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNITERA — Draft-to-Commit Governance Preview</title>
+<meta name="description" content="Synthetische Draft-to-Commit Landing Page für AI-gestützte Revenue Commitments mit Review, Approval, Commit und Audit Evidence.">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a08;
+    --bg-2: #111110;
+    --bg-3: #1a1a18;
+    --bg-4: #222220;
+    --border: rgba(255,255,255,0.07);
+    --border-mid: rgba(255,255,255,0.12);
+    --border-accent: rgba(255,255,255,0.22);
+    --text: #f0ede8;
+    --text-2: #a09c95;
+    --text-3: #5a5750;
+    --accent: #b7d66a;
+    --accent-dim: rgba(183,214,106,0.11);
+    --accent-border: rgba(183,214,106,0.28);
+    --red: #ff5c4a;
+    --red-dim: rgba(255,92,74,0.1);
+    --amber: #f5a623;
+    --amber-dim: rgba(245,166,35,0.1);
+    --blue: #5ab0ff;
+    --blue-dim: rgba(90,176,255,0.08);
+    --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --serif: Georgia, Cambria, 'Times New Roman', serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+    --radius: 4px;
+    --radius-lg: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(10,10,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 0.5rem 1.25rem;
+    border: 0.5px solid var(--accent-border);
+    color: var(--accent);
+    background: var(--accent-dim);
+    border-radius: var(--radius);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: rgba(200,240,90,0.2); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 2.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 30%, transparent 100%);
+  }
+
+  .hero-noise {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 20% 80%, rgba(200,240,90,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 80% 20%, rgba(90,176,255,0.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 0.5px;
+    background: var(--accent);
+  }
+
+  .hero-headline {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 1.08;
+    font-weight: 400;
+    max-width: 900px;
+    margin-bottom: 1.75rem;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .hero-headline em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: var(--text-2);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn-primary {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: #0a0a08;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { opacity: 0.88; }
+
+  .btn-secondary {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    padding: 0.85rem 2rem;
+    border: 0.5px solid var(--border-accent);
+    color: var(--text);
+    background: transparent;
+    border-radius: var(--radius);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-3);
+    border-color: var(--border-accent);
+  }
+
+  .hero-trust {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-3);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid var(--border);
+    max-width: 540px;
+    line-height: 1.6;
+  }
+
+  /* SECTION CONTAINER */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+
+  section { padding: 7rem 0; }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-tag span {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: var(--bg-3);
+    border: 0.5px solid var(--border);
+    border-radius: 2px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .section-title em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .section-lead {
+    font-size: 1rem;
+    color: var(--text-2);
+    max-width: 540px;
+    line-height: 1.75;
+    margin-bottom: 3.5rem;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 0.5px;
+    background: var(--border);
+    width: 100%;
+  }
+
+  /* FLOW DIAGRAM */
+  .flow-section {
+    background: var(--bg-2);
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    padding: 4rem 0;
+  }
+
+  .flow-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .flow-col-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .flow-col-title.bad { color: var(--red); }
+  .flow-col-title.good { color: var(--accent); }
+
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .flow-step:last-child { border-bottom: none; }
+
+  .flow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 0.4rem;
+  }
+
+  .flow-dot.bad { background: var(--red); }
+  .flow-dot.good { background: var(--accent); }
+
+  .flow-step-text {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+
+  .flow-step-text strong {
+    display: block;
+    color: var(--text);
+    font-weight: 500;
+    margin-bottom: 0.15rem;
+  }
+
+  .flow-vs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-3);
+    letter-spacing: 0.1em;
+    padding-top: 2rem;
+  }
+
+  /* ARTIFACT 01 — Problem Brief */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+
+  .problem-card {
+    background: var(--bg-2);
+    padding: 2rem;
+    position: relative;
+  }
+
+  .problem-card:hover { background: var(--bg-3); }
+
+  .p-card-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 0.75rem;
+  }
+
+  .p-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .p-card-body {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.65;
+  }
+
+  .p-card-icon {
+    font-size: 22px;
+    margin-bottom: 1rem;
+  }
+
+  .problem-full {
+    grid-column: 1 / -1;
+    background: var(--bg-3);
+    padding: 2rem;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .problem-missing {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .missing-arrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    white-space: pre;
+    line-height: 1.8;
+    flex-shrink: 0;
+  }
+
+  .missing-text {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.7;
+  }
+
+  .missing-text strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 0.75rem 1.5rem;
+    border: 0.5px solid var(--border-accent);
+    color: var(--text);
+    background: var(--bg-3);
+    border-radius: var(--radius);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .dl-btn:hover {
+    background: var(--bg-4);
+    border-color: var(--accent-border);
+    color: var(--accent);
+  }
+
+  .dl-btn svg {
+    width: 14px; height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ARTIFACT 02 — Checklist */
+  #checklist { background: var(--bg); }
+
+  .checklist-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+  }
+
+  .checklist-table thead th {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 0.5px solid var(--border-mid);
+    font-weight: 400;
+  }
+
+  .checklist-table tbody tr {
+    border-bottom: 0.5px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .checklist-table tbody tr:hover { background: var(--bg-3); }
+
+  .checklist-table td {
+    padding: 1rem;
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .check-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-3);
+    width: 32px;
+    padding-right: 0;
+  }
+
+  .check-question {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .check-risk {
+    color: var(--text-2);
+    font-size: 12px;
+  }
+
+  .check-risk .risk-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    margin-bottom: 0.3rem;
+  }
+
+  .risk-high { background: var(--red-dim); color: var(--red); border: 0.5px solid rgba(255,92,74,0.2); }
+  .risk-med { background: var(--amber-dim); color: var(--amber); border: 0.5px solid rgba(245,166,35,0.2); }
+
+  .check-gate {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    white-space: nowrap;
+    border: 0.5px solid var(--accent-border);
+  }
+
+  .check-owner {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-2);
+    white-space: nowrap;
+  }
+
+  .check-cb {
+    width: 16px; height: 16px;
+    border: 0.5px solid var(--border-mid);
+    border-radius: 2px;
+    background: var(--bg-2);
+    cursor: pointer;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .check-cb.checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .check-cb.checked::after {
+    content: '';
+    display: block;
+    width: 8px; height: 5px;
+    border-left: 1.5px solid #0a0a08;
+    border-bottom: 1.5px solid #0a0a08;
+    transform: rotate(-45deg) translateY(-1px);
+  }
+
+  .progress-bar-wrap {
+    margin-top: 2rem;
+    background: var(--bg-3);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .progress-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-2);
+    white-space: nowrap;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 4px;
+    background: var(--bg-4);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+
+  .progress-score {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 40px;
+    text-align: right;
+  }
+
+  .checklist-cta {
+    margin-top: 2.5rem;
+    padding: 1.5rem 2rem;
+    background: var(--bg-2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .checklist-cta p {
+    font-size: 14px;
+    color: var(--text-2);
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  /* ARTIFACT 03 — Audit Evidence Demo */
+  #audit-pack { background: var(--bg-2); border-top: 0.5px solid var(--border); }
+
+  .audit-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border-mid);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: 3rem;
+    min-height: 540px;
+  }
+
+  .audit-sidebar {
+    background: var(--bg-3);
+    padding: 1.5rem;
+  }
+
+  .audit-sidebar-title {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 1rem;
+  }
+
+  .audit-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-bottom: 0.25rem;
+  }
+
+  .audit-nav-item:hover { background: var(--bg-4); }
+
+  .audit-nav-item.active {
+    background: var(--accent-dim);
+    border: 0.5px solid var(--accent-border);
+  }
+
+  .audit-nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .audit-nav-item.active .audit-nav-dot { background: var(--accent); }
+  .audit-nav-item .audit-nav-dot { background: var(--text-3); }
+
+  .audit-nav-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-2);
+  }
+
+  .audit-nav-item.active .audit-nav-label { color: var(--accent); }
+
+  .audit-main {
+    background: var(--bg-2);
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .audit-panel { display: none; }
+  .audit-panel.active { display: block; }
+
+  .audit-panel-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .summary-field {
+    padding: 0.75rem;
+    background: var(--bg-3);
+    border-radius: var(--radius);
+    border: 0.5px solid var(--border);
+  }
+
+  .sf-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 0.3rem;
+  }
+
+  .sf-value {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .sf-value.accent { color: var(--accent); }
+  .sf-value.red { color: var(--red); }
+  .sf-value.amber { color: var(--amber); }
+
+  .risk-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+  }
+
+  .risk-high-b { background: var(--red-dim); color: var(--red); border: 0.5px solid rgba(255,92,74,0.25); }
+  .risk-med-b { background: var(--amber-dim); color: var(--amber); border: 0.5px solid rgba(245,166,35,0.25); }
+  .risk-low-b { background: var(--accent-dim); color: var(--accent); border: 0.5px solid var(--accent-border); }
+
+  /* Gate Results */
+  .gate-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: var(--radius);
+    border: 0.5px solid var(--border);
+    background: var(--bg-3);
+  }
+
+  .gate-status {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .gate-status.pass { background: var(--accent); }
+  .gate-status.fail { background: var(--red); }
+  .gate-status.escalate { background: var(--amber); }
+
+  .gate-name {
+    flex: 1;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .gate-result-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .gate-result-label.pass { color: var(--accent); }
+  .gate-result-label.fail { color: var(--red); }
+  .gate-result-label.escalate { color: var(--amber); }
+
+  /* Review Trail */
+  .review-row {
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 0.5px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .review-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--bg-4);
+    border: 0.5px solid var(--border-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-3);
+    flex-shrink: 0;
+  }
+
+  .review-content { flex: 1; }
+
+  .review-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.2rem;
+    flex-wrap: wrap;
+  }
+
+  .review-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .review-role {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .review-time {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-3);
+    margin-left: auto;
+  }
+
+  .review-action {
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+
+  /* Timeline */
+  .timeline-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 0.5px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .timeline-time {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-3);
+    white-space: nowrap;
+    padding-top: 0.1rem;
+    min-width: 50px;
+  }
+
+  .timeline-dot-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0.35rem;
+  }
+
+  .timeline-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border-mid);
+    flex-shrink: 0;
+  }
+
+  .timeline-dot.accent { background: var(--accent); }
+  .timeline-dot.red { background: var(--red); }
+  .timeline-dot.amber { background: var(--amber); }
+  .timeline-dot.blue { background: var(--blue); }
+
+  .timeline-label {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .timeline-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-3);
+    margin-top: 0.15rem;
+  }
+
+  /* CONCEPT LAYER */
+  #concept {
+    background: var(--bg);
+    border-top: 0.5px solid var(--border);
+  }
+
+  .concept-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+
+  .concept-step {
+    background: var(--bg-2);
+    padding: 2rem 1.5rem;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .concept-step:hover { background: var(--bg-3); }
+
+  .cs-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--text-3);
+    margin-bottom: 1rem;
+  }
+
+  .cs-icon {
+    font-size: 20px;
+    margin-bottom: 0.75rem;
+  }
+
+  .cs-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .cs-body {
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.6;
+  }
+
+  .cs-arrow {
+    position: absolute;
+    top: 2rem; right: -8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    z-index: 1;
+  }
+
+  .concept-step:last-child .cs-arrow { display: none; }
+
+  /* ABOUT */
+  #about {
+    background: var(--bg-2);
+    border-top: 0.5px solid var(--border);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-text {
+    font-size: 15px;
+    color: var(--text-2);
+    line-height: 1.8;
+  }
+
+  .about-text p { margin-bottom: 1.25rem; }
+
+  .about-text strong { color: var(--text); font-weight: 600; }
+
+  .about-sidebar {
+    padding-top: 0.5rem;
+  }
+
+  .about-sidebar-title {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 1.25rem;
+  }
+
+  .artifact-card {
+    padding: 1rem;
+    background: var(--bg-3);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: block;
+  }
+
+  .artifact-card:hover {
+    background: var(--bg-4);
+    border-color: var(--border-mid);
+  }
+
+  .ac-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--text-3);
+    margin-bottom: 0.35rem;
+  }
+
+  .ac-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--bg);
+    border-top: 0.5px solid var(--border);
+  }
+
+  .contact-box {
+    background: var(--bg-2);
+    border: 0.5px solid var(--border-mid);
+    border-radius: var(--radius-lg);
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .contact-headline {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .contact-sub {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.7;
+    max-width: 420px;
+  }
+
+  .contact-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 220px;
+  }
+
+  .contact-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1.25rem;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-3);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text);
+    letter-spacing: 0.06em;
+  }
+
+  .contact-option:hover {
+    border-color: var(--accent-border);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .contact-option svg {
+    width: 14px; height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 2.5rem;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-logo {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .footer-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-3);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-note span {
+    padding: 0.2rem 0.5rem;
+    background: var(--bg-3);
+    border: 0.5px solid var(--border);
+    border-radius: 2px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-right: 0.5rem;
+  }
+
+  /* SYNTHETIC MARKER */
+  .synthetic-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    background: var(--blue-dim);
+    border: 0.5px solid rgba(90,176,255,0.2);
+    border-radius: 2px;
+    color: var(--blue);
+    margin-bottom: 1.5rem;
+  }
+
+  .synthetic-badge::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--blue);
+    flex-shrink: 0;
+  }
+
+  .scope-note {
+    margin: 1.25rem 0 2rem;
+    padding: 1rem 1.25rem;
+    border: 0.5px solid var(--border-mid);
+    background: var(--bg-2);
+    border-radius: var(--radius);
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.65;
+  }
+
+  .scope-note strong { color: var(--text); font-weight: 600; }
+
+  .gate-status-badge {
+    display: inline-block;
+    margin-top: 0.45rem;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.16rem 0.42rem;
+    border-radius: 2px;
+    vertical-align: middle;
+  }
+
+  .gate-status-badge.runtime { color: var(--accent); background: var(--accent-dim); border: 0.5px solid var(--accent-border); }
+  .gate-status-badge.decision { color: var(--blue); background: var(--blue-dim); border: 0.5px solid rgba(90,176,255,0.22); }
+  .gate-status-badge.docs { color: var(--amber); background: var(--amber-dim); border: 0.5px solid rgba(245,166,35,0.22); }
+  .gate-status-badge.evidence { color: var(--text-2); background: var(--bg-4); border: 0.5px solid var(--border-mid); }
+
+
+  /* CONTEXT ITEMS */
+  .context-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .context-item {
+    padding: 0.6rem 0.75rem;
+    background: var(--bg-3);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .ci-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 0.2rem;
+  }
+
+  .ci-val {
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  /* Commit Action */
+  .commit-box {
+    padding: 1.25rem;
+    background: var(--accent-dim);
+    border: 0.5px solid var(--accent-border);
+    border-radius: var(--radius);
+  }
+
+  .commit-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .commit-action {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .commit-detail {
+    font-size: 12px;
+    color: var(--text-2);
+    margin-top: 0.3rem;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag { animation: fadeUp 0.5s ease both; }
+  .hero-headline { animation: fadeUp 0.5s ease 0.1s both; }
+  .hero-sub { animation: fadeUp 0.5s ease 0.2s both; }
+  .hero-actions { animation: fadeUp 0.5s ease 0.3s both; }
+  .hero-trust { animation: fadeUp 0.5s ease 0.4s both; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .hero { padding: 7rem 1.25rem 4rem; }
+    .container { padding: 0 1.25rem; }
+    section { padding: 4rem 0; }
+    .flow-wrapper { grid-template-columns: 1fr; gap: 2rem; }
+    .flow-vs { display: none; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .concept-steps { grid-template-columns: 1fr 1fr; }
+    .cs-arrow { display: none; }
+    .audit-layout { grid-template-columns: 1fr; }
+    .audit-sidebar { border-bottom: 0.5px solid var(--border); }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .contact-box { grid-template-columns: 1fr; gap: 2rem; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .context-items { grid-template-columns: 1fr 1fr; }
+    .checklist-table { font-size: 12px; }
+    .checklist-table .check-gate,
+    .checklist-table .check-owner { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">UNITERA</a>
+  <ul class="nav-links">
+    <li><a href="#problem-brief">Problem Brief</a></li>
+    <li><a href="#checklist">Risk Checklist</a></li>
+    <li><a href="#audit-pack">Audit Evidence Demo</a></li>
+    <li><a href="#contact">Prozess-Spiegelung</a></li>
+  </ul>
+  <a href="#checklist" class="nav-cta">Risk Checklist →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="hero-tag">Synthetische Orientierung — Draft-to-Commit Governance</div>
+    <h1 class="hero-headline">
+      AI-Drafts sind noch keine<br>freigegebenen <em>Business Commitments.</em>
+    </h1>
+    <p class="hero-sub">
+      Eine claim-sichere Konzeptseite für B2B-Unternehmen, die AI in Angebots-, RFP- oder Change-Request-Prozessen nutzen — und den Übergang von Draft zu Review, Approval, Commit und Audit Evidence kontrollierbar machen wollen.
+    </p>
+    <div class="hero-actions">
+      <a href="#checklist" class="btn-primary">Risk Checklist ansehen</a>
+      <a href="#audit-pack" class="btn-secondary">Mini Audit Evidence Demo öffnen</a>
+    </div>
+    <p class="hero-trust">
+      Synthetische Orientierung, keine Kundenreferenz und kein Integrationsnachweis. Drei prüfbare Artefakte zu einem konkreten Problem: Wie wird aus einem AI-generierten Draft eine verantwortbare Unternehmenszusage?
+    </p>
+  </div>
+</section>
+
+<!-- FLOW COMPARISON -->
+<div class="flow-section">
+  <div class="container">
+    <div class="flow-wrapper">
+      <div>
+        <div class="flow-col-title bad">Unkontrollierter Pfad</div>
+        <div class="flow-step">
+          <div class="flow-dot bad"></div>
+          <div class="flow-step-text">
+            <strong>AI Draft</strong>
+            Ohne Kontext-Bindung, ohne Policy-Check
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot bad"></div>
+          <div class="flow-step-text">
+            <strong>Unclear Review</strong>
+            Informell, keine Rollenklärung
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot bad"></div>
+          <div class="flow-step-text">
+            <strong>Implicit Approval</strong>
+            Mündlich, nicht dokumentiert
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot bad"></div>
+          <div class="flow-step-text">
+            <strong>Customer Commitment</strong>
+            Preis, Scope, Claims außen
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot bad"></div>
+          <div class="flow-step-text">
+            <strong>Weak Audit Evidence</strong>
+            Nicht belegbar, nicht nachvollziehbar
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-vs">vs</div>
+
+      <div>
+        <div class="flow-col-title good">Kontrollierter Pfad</div>
+        <div class="flow-step">
+          <div class="flow-dot good"></div>
+          <div class="flow-step-text">
+            <strong>Intake + Context Binding</strong>
+            Opportunity-, Dokument- und Regelkontext gebunden
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot good"></div>
+          <div class="flow-step-text">
+            <strong>AI-Assisted Draft</strong>
+            Mit gebundenem Kontext generiert
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot good"></div>
+          <div class="flow-step-text">
+            <strong>Policy Evaluation</strong>
+            Runtime-nahe und illustrative Gates klar getrennt
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot good"></div>
+          <div class="flow-step-text">
+            <strong>Multi-Role Review + Approval</strong>
+            Reviewer, Approver, Policy Owner
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-dot good"></div>
+          <div class="flow-step-text">
+            <strong>Traceable Commit + Audit Evidence</strong>
+            Mit Audit Timeline und Evidence Bundle dokumentiert
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ARTIFACT 01 — PROBLEM BRIEF -->
+<section id="problem-brief">
+  <div class="container">
+    <div class="section-tag"><span>Artifact 01</span> Problem Brief</div>
+    <h2 class="section-title">The <em>Draft-to-Commit</em> Gap</h2>
+    <p class="section-lead">
+      Viele Unternehmen nutzen AI bereits für Angebotsentwürfe, RFP-Antworten oder Change Requests. Das eigentliche Risiko entsteht nicht beim Schreiben. Es entsteht an der Stelle, an der ein Draft zur verbindlichen Umsatz-Zusage wird.
+    </p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="p-card-label">Observation</div>
+        <div class="p-card-title">AI beschleunigt Drafting, nicht Governance.</div>
+        <p class="p-card-body">Generative AI kann die Zeit für erste Angebotsentwürfe spürbar reduzieren. Der Review-Zyklus danach bleibt oft unverändert — oder wird durch das erhöhte Volumen noch fragiler.</p>
+      </div>
+      <div class="problem-card">
+        <div class="p-card-label">Pain</div>
+        <div class="p-card-title">Preis, Scope, Claims, Klauseln ohne Gate.</div>
+        <p class="p-card-body">Rabatte, Leistungsversprechen, risikonahe Aussagen und Haftungsklauseln können ohne saubere Freigabe nach außen gehen — in einer Version, die niemand formal bestätigt hat.</p>
+      </div>
+      <div class="problem-card">
+        <div class="p-card-label">Business Impact</div>
+        <div class="p-card-title">Messbare Risiken, keine Theorie.</div>
+        <p class="p-card-body">Falsche Rabatte, nicht belegbare Claims, unklare Haftung, fehlende Review-Spur. Jeder dieser Punkte ist ein reales Szenario in Vertriebsprozessen mit erhöhtem AI-Drafting-Anteil.</p>
+      </div>
+      <div class="problem-card">
+        <div class="p-card-label">Concept Hint</div>
+        <div class="p-card-title">Revenue Commitments brauchen einen kontrollierten Übergabepfad.</div>
+        <p class="p-card-body">Die Lösung liegt nicht im AI-Tool selbst. Sie liegt in dem, was zwischen Draft und Commitment kommt: einem kontrollierten, rollenbasierten und auditierbaren Übergabepfad.</p>
+      </div>
+
+      <div class="problem-full">
+        <div class="problem-missing">
+          <div class="missing-arrow">Missing Layer →</div>
+          <div class="missing-text">
+            Es fehlt ein kontrollierter Übergang von <strong>Draft → Review → Approval → Commit → Audit.</strong> Dieser Übergang muss strukturierbar, reviewbar, auditierbar und traceable sein — unabhängig davon, welches AI-Tool den Draft erzeugt hat. Genau das ist die Governance-Schicht, die UNITERA als Operating Layer bereitstellt.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#" class="dl-btn" onclick="return false;">
+      <svg viewBox="0 0 24 24"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+      Problem Brief als PDF vorbereiten
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ARTIFACT 02 — CHECKLIST -->
+<section id="checklist">
+  <div class="container">
+    <div class="section-tag"><span>Artifact 02</span> Risk Checklist</div>
+    <h2 class="section-title"><em>Revenue Commitment</em> Risk Checklist</h2>
+    <p class="section-lead">
+      Diese Checkliste prüft, ob ein AI-gestützter Angebots- oder RFP-Prozess kontrolliert genug ist, bevor daraus eine verbindliche Kundenzusage wird. Klicken Sie eine Zeile an, um sie als geprüft zu markieren.
+    </p>
+
+    <div class="scope-note"><strong>Boundary:</strong> Die Gate-Namen sind Diagnose- und Zielbildsprache. Nur <strong>Missing Context</strong> und <strong>Commit Readiness</strong> werden hier als runtime-nah markiert; Pricing, Mandatory Clause und Restricted Claims bleiben illustrativ bzw. docs-only, bis eigene Runtime-Evidence vorliegt.</div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-label">Prozess-Kontrolle</div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-score" id="progress-score">0 / 8</div>
+    </div>
+
+    <table class="checklist-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>Prüffrage</th>
+          <th>Risiko</th>
+          <th>Policy Gate</th>
+          <th>Prüfer</th>
+        </tr>
+      </thead>
+      <tbody id="checklist-body">
+        <tr onclick="toggleCheck(0)">
+          <td class="check-num">01</td>
+          <td style="width:28px;"><div class="check-cb" id="cb-0"></div></td>
+          <td><div class="check-question">Wurde der aktuelle CRM-/Opportunity-Kontext gebunden?</div></td>
+          <td><div class="check-risk"><span class="risk-tag risk-high">Hoch</span><br>Falscher Kunde, falscher Scope</div></td>
+          <td><div class="check-gate">Missing Context Gate<br><span class="gate-status-badge runtime">runtime</span></div></td>
+          <td><div class="check-owner">RevOps / Sales</div></td>
+        </tr>
+        <tr onclick="toggleCheck(1)">
+          <td class="check-num">02</td>
+          <td><div class="check-cb" id="cb-1"></div></td>
+          <td><div class="check-question">Enthält der Draft Rabatte oder Sonderpreise?</div></td>
+          <td><div class="check-risk"><span class="risk-tag risk-high">Hoch</span><br>Margenverlust</div></td>
+          <td><div class="check-gate">Pricing Threshold Gate<br><span class="gate-status-badge docs">docs-only</span></div></td>
+          <td><div class="check-owner">Finance</div></td>
+        </tr>
+        <tr onclick="toggleCheck(2)">
+          <td class="check-num">03</td>
+          <td><div class="check-cb" id="cb-2"></div></td>
+          <td><div class="check-question">Gibt es Leistungs-, Security- oder Compliance-Claims?</div></td>
+          <td><div class="check-risk"><span class="risk-tag risk-high">Hoch</span><br>Nicht belegbare Zusagen</div></td>
+          <td><div class="check-gate">Restricted Claims Gate<br><span class="gate-status-badge docs">docs-only</span></div></td>
+          <td><div class="check-owner">Legal / Compliance</div></td>
+        </tr>
+        <tr onclick="toggleCheck(3)">
+          <td class="check-num">04</td>
+          <td><div class="check-cb" id="cb-3"></div></td>
+          <td><div class="check-question">Sind Pflichtklauseln enthalten?</div></td>
+          <td><div class="check-risk"><span class="risk-tag risk-high">Hoch</span><br>Vertrags-/Haftungsrisiko</div></td>
+          <td><div class="check-gate">Mandatory Clause Gate<br><span class="gate-status-badge docs">docs-only</span></div></td>
+          <td><div class="check-owner">Legal</div></td>
+        </tr>
+        <tr onclick="toggleCheck(4)">
+          <td class="check-num">05</td>
+          <td><div class="check-cb" id="cb-4"></div></td>
+          <td><div class="check-question">Wurde die geprüfte Version eindeutig festgehalten?</div></td>
+          <td><div class="check-risk"><span class="risk-tag risk-med">Mittel</span><br>Review bezieht sich auf falsche Version</div></td>
+          <td><div class="check-gate">Version Lineage<br><span class="gate-status-badge evidence">evidence</span></div></td>
+          <td><div class="check-owner">Approver</div></td>
+        </tr>
+        <tr onclick="toggleCheck(5)">
+          <td class="check-num">06</td>
+          <td><div class="check-cb" id="cb-5"></div></td>
+          <td><div class="check-question">Ist klar, wer final freigeben darf?</div></td>
+          <td><div class="check-risk"><span class="risk-tag risk-high">Hoch</span><br>Informelle Zustimmung statt Approval</div></td>
+          <td><div class="check-gate">Review / Approval<br><span class="gate-status-badge runtime">runtime</span></div></td>
+          <td><div class="check-owner">Sales Approver / Legal</div></td>
+        </tr>
+        <tr onclick="toggleCheck(6)">
+          <td class="check-num">07</td>
+          <td><div class="check-cb" id="cb-6"></div></td>
+          <td><div class="check-question">Gibt es eine definierte Commit-Aktion?</div></td>
+          <td><div class="check-risk"><span class="risk-tag risk-high">Hoch</span><br>Unklar, was tatsächlich ausgelöst wurde</div></td>
+          <td><div class="check-gate">Commit Readiness Gate<br><span class="gate-status-badge runtime">runtime</span></div></td>
+          <td><div class="check-owner">Ops / System</div></td>
+        </tr>
+        <tr onclick="toggleCheck(7)">
+          <td class="check-num">08</td>
+          <td><div class="check-cb" id="cb-7"></div></td>
+          <td><div class="check-question">Gibt es ein vollständiges Audit Evidence?</div></td>
+          <td><div class="check-risk"><span class="risk-tag risk-med">Mittel</span><br>Nachträglich nicht belegbar</div></td>
+          <td><div class="check-gate">Audit Closure<br><span class="gate-status-badge evidence">evidence</span></div></td>
+          <td><div class="check-owner">Auditor / Compliance</div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="checklist-cta">
+      <p>Wollen Sie diese Checkliste einmal gegen Ihren aktuellen Angebots- oder RFP-Prozess spiegeln? Ich kann zeigen, wo Review-, Approval- oder Audit-Lücken entstehen könnten.</p>
+      <a href="#contact" class="btn-primary">Prozess spiegeln →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ARTIFACT 03 — MINI AUDIT PACK DEMO -->
+<section id="audit-pack">
+  <div class="container">
+    <div class="section-tag"><span>Artifact 03</span> Mini Audit Evidence Demo</div>
+    <h2 class="section-title"><em>Synthetischer</em> Commitment Run</h2>
+    <p class="section-lead">
+      Beispiel eines synthetischen Revenue Commitment Runs: Ein AI-unterstützter Angebotsentwurf wird mit Kontext, Gate-Klassifikation, Review, Approval, Commit Action und Audit Timeline dokumentiert. Die Demo trennt runtime-nahe Pfade von illustrativen Ziel-Gates.
+    </p>
+
+    <div class="synthetic-badge">Synthetisches Beispiel — keine realen Kundendaten, keine Integrationsclaims</div>
+
+    <div class="audit-layout">
+      <div class="audit-sidebar">
+        <div class="audit-sidebar-title">Audit Evidence Sections</div>
+        <div class="audit-nav-item active" onclick="showPanel('summary', this)">
+          <div class="audit-nav-dot"></div>
+          <div class="audit-nav-label">01 — Synthetic Commitment Summary</div>
+        </div>
+        <div class="audit-nav-item" onclick="showPanel('context', this)">
+          <div class="audit-nav-dot"></div>
+          <div class="audit-nav-label">02 — Context Snapshot</div>
+        </div>
+        <div class="audit-nav-item" onclick="showPanel('gates', this)">
+          <div class="audit-nav-dot"></div>
+          <div class="audit-nav-label">03 — Gate Classification</div>
+        </div>
+        <div class="audit-nav-item" onclick="showPanel('review', this)">
+          <div class="audit-nav-dot"></div>
+          <div class="audit-nav-label">04 — Review Trail</div>
+        </div>
+        <div class="audit-nav-item" onclick="showPanel('commit', this)">
+          <div class="audit-nav-dot"></div>
+          <div class="audit-nav-label">05 — Approval & Commit</div>
+        </div>
+        <div class="audit-nav-item" onclick="showPanel('timeline', this)">
+          <div class="audit-nav-dot"></div>
+          <div class="audit-nav-label">06 — Audit Timeline</div>
+        </div>
+      </div>
+
+      <div class="audit-main">
+
+        <!-- PANEL: Summary -->
+        <div class="audit-panel active" id="panel-summary">
+          <div class="audit-panel-title">Synthetic Commitment Summary</div>
+          <div class="summary-grid">
+            <div class="summary-field">
+              <div class="sf-label">Kunde</div>
+              <div class="sf-value">Musterkunde GmbH</div>
+            </div>
+            <div class="summary-field">
+              <div class="sf-label">Opportunity</div>
+              <div class="sf-value">SYN-OPP-2024-0891</div>
+            </div>
+            <div class="summary-field">
+              <div class="sf-label">Angebotsart</div>
+              <div class="sf-value">Revenue Commitment — Angebot / RFP-Beispiel</div>
+            </div>
+            <div class="summary-field">
+              <div class="sf-label">Risiko-Level</div>
+              <div class="sf-value red"><span class="risk-badge risk-high-b">Hoch</span></div>
+            </div>
+            <div class="summary-field">
+              <div class="sf-label">Angebotsvolumen</div>
+              <div class="sf-value">€ 148.500 / Jahr (synthetisch)</div>
+            </div>
+            <div class="summary-field">
+              <div class="sf-label">Status</div>
+              <div class="sf-value accent">✓ Approved — Commit-ready</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL: Context -->
+        <div class="audit-panel" id="panel-context">
+          <div class="audit-panel-title">Context Snapshot — synthetisch gebundene Quellen</div>
+          <div class="context-items">
+            <div class="context-item">
+              <div class="ci-label">Opportunity Context</div>
+              <div class="ci-val">Synthetic opportunity record — v3.2</div>
+            </div>
+            <div class="context-item">
+              <div class="ci-label">RFP Dokument</div>
+              <div class="ci-val">acme-rfp-logistics-2024.pdf</div>
+            </div>
+            <div class="context-item">
+              <div class="ci-label">Pricing Rules</div>
+              <div class="ci-val">Enterprise Tier — Q4/2024</div>
+            </div>
+            <div class="context-item">
+              <div class="ci-label">Playbook</div>
+              <div class="ci-val">Renewal Playbook v2.1</div>
+            </div>
+            <div class="context-item">
+              <div class="ci-label">Review Baseline</div>
+              <div class="ci-val">Internal review standard — synthetic</div>
+            </div>
+            <div class="context-item">
+              <div class="ci-label">Draft Version</div>
+              <div class="ci-val">offer-v3-final.docx — sha: 4a8f9c</div>
+            </div>
+          </div>
+          <p style="font-size:13px; color: var(--text-2); line-height:1.65;">Alle Kontext-Quellen sind in diesem Beispiel vor der Drafting-Phase gebunden und mit der Audit Timeline verknüpft. Das ist ein synthetisches Zielbild, kein Nachweis aktiver Kundenintegration.</p>
+        </div>
+
+        <!-- PANEL: Gates -->
+        <div class="audit-panel" id="panel-gates">
+          <div class="audit-panel-title">Gate Classification Demo</div>
+          <div class="scope-note" style="margin-top:0;"><strong>Boundary:</strong> Missing Context und Commit Readiness sind runtime-nah. Pricing Threshold, Restricted Claims und Mandatory Clause sind hier illustrative Ziel-Gates. Compliance Review ist Decision-Layer, nicht eigenständige Runtime-Authority.</div>
+          <div class="gate-row">
+            <div class="gate-status fail"></div>
+            <div class="gate-name">Pricing Threshold Gate <span class="gate-status-badge docs">docs-only</span></div>
+            <div class="gate-result-label fail">Fehlgeschlagen</div>
+          </div>
+          <div style="padding: 0.5rem 1rem 1rem 2rem; font-size: 12px; color: var(--text-2); margin-bottom: 0.5rem;">
+            Illustratives Ziel-Gate: Rabatt von 18% überschreitet angenommene Schwelle (15%). Finance Review als Zielbild ausgelöst.
+          </div>
+          <div class="gate-row">
+            <div class="gate-status pass"></div>
+            <div class="gate-name">Missing Context Gate <span class="gate-status-badge runtime">runtime</span></div>
+            <div class="gate-result-label pass">Bestanden</div>
+          </div>
+          <div class="gate-row">
+            <div class="gate-status escalate"></div>
+            <div class="gate-name">Restricted Claims Gate <span class="gate-status-badge docs">docs-only</span></div>
+            <div class="gate-result-label escalate">Eskaliert</div>
+          </div>
+          <div style="padding: 0.5rem 1rem 1rem 2rem; font-size: 12px; color: var(--text-2); margin-bottom: 0.5rem;">
+            Illustratives Ziel-Gate: 2 risikonahe Claims erkannt. Legal Review mit Limits als Decision-Layer-Beispiel freigegeben.
+          </div>
+          <div class="gate-row">
+            <div class="gate-status escalate"></div>
+            <div class="gate-name">Compliance Review Gate <span class="gate-status-badge decision">decision-layer</span></div>
+            <div class="gate-result-label escalate">Review Required</div>
+          </div>
+          <div class="gate-row">
+            <div class="gate-status pass"></div>
+            <div class="gate-name">Mandatory Clause Gate <span class="gate-status-badge docs">docs-only</span></div>
+            <div class="gate-result-label pass">Bestanden</div>
+          </div>
+          <div class="gate-row">
+            <div class="gate-status pass"></div>
+            <div class="gate-name">Commit Readiness Gate <span class="gate-status-badge runtime">runtime</span></div>
+            <div class="gate-result-label pass">Bestanden</div>
+          </div>
+        </div>
+
+        <!-- PANEL: Review -->
+        <div class="audit-panel" id="panel-review">
+          <div class="audit-panel-title">Review Trail</div>
+          <div class="review-row">
+            <div class="review-avatar">MK</div>
+            <div class="review-content">
+              <div class="review-meta">
+                <div class="review-name">F. Reviewer</div>
+                <div class="review-role">Finance Reviewer</div>
+                <div class="review-time">10:05 Uhr</div>
+              </div>
+              <div class="review-action">Pricing-Exception für 18% Rabatt geprüft. Freigabe unter Bedingung: maximale Laufzeit 24 Monate. Conditional Approve.</div>
+            </div>
+          </div>
+          <div class="review-row">
+            <div class="review-avatar">SB</div>
+            <div class="review-content">
+              <div class="review-meta">
+                <div class="review-name">L. Reviewer</div>
+                <div class="review-role">Legal / Compliance Reviewer</div>
+                <div class="review-time">11:20 Uhr</div>
+              </div>
+              <div class="review-action">Risikonahe Claims geprüft. Zwei Formulierungen eingeschränkt. Freigabe mit Auflagen für spezifische Klausel-Version 4.2. Approved with Limits.</div>
+            </div>
+          </div>
+          <div class="review-row">
+            <div class="review-avatar">TP</div>
+            <div class="review-content">
+              <div class="review-meta">
+                <div class="review-name">A. Approver</div>
+                <div class="review-role">Sales Approver</div>
+                <div class="review-time">11:43 Uhr</div>
+              </div>
+              <div class="review-action">Finalen Angebotstext geprüft. Bedingungen aus Finance und Legal übernommen. Final Approved.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL: Commit -->
+        <div class="audit-panel" id="panel-commit">
+          <div class="audit-panel-title">Approval Decision &amp; Commit Action</div>
+          <div class="summary-grid" style="margin-bottom: 1.5rem;">
+            <div class="summary-field">
+              <div class="sf-label">Approval Decision</div>
+              <div class="sf-value accent">Conditional Approved</div>
+            </div>
+            <div class="summary-field">
+              <div class="sf-label">Approved by</div>
+              <div class="sf-value">A. Approver — Sales Approver</div>
+            </div>
+            <div class="summary-field">
+              <div class="sf-label">Approval Timestamp</div>
+              <div class="sf-value">11:43 Uhr — 2024-11-14</div>
+            </div>
+            <div class="summary-field">
+              <div class="sf-label">Bedingungen</div>
+              <div class="sf-value amber">2 aktive Auflagen</div>
+            </div>
+          </div>
+          <div class="commit-box">
+            <div class="commit-label">Commit Action vorbereitet</div>
+            <div class="commit-action">→ Send-ready Package + Internal Evidence Receipt</div>
+            <div class="commit-detail">Angebotsversion: offer-v3-final.docx · sha: 4a8f9c · 12:05 Uhr · externe Integrationen illustrativ</div>
+          </div>
+        </div>
+
+        <!-- PANEL: Timeline -->
+        <div class="audit-panel" id="panel-timeline">
+          <div class="audit-panel-title">Audit Timeline — chronologisch</div>
+          <div class="timeline-item">
+            <div class="timeline-time">09:12</div>
+            <div class="timeline-dot-wrap"><div class="timeline-dot accent"></div></div>
+            <div>
+              <div class="timeline-label">Intake created</div>
+              <div class="timeline-sub">SYN-OPP-2024-0891 · Musterkunde GmbH</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">09:18</div>
+            <div class="timeline-dot-wrap"><div class="timeline-dot blue"></div></div>
+            <div>
+              <div class="timeline-label">Context Snapshot bound</div>
+              <div class="timeline-sub">Opportunity Context, RFP, Rules, Playbook gebunden</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">09:34</div>
+            <div class="timeline-dot-wrap"><div class="timeline-dot accent"></div></div>
+            <div>
+              <div class="timeline-label">AI Draft v1 generiert</div>
+              <div class="timeline-sub">offer-v1.docx · sha: 2c3a11</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">09:41</div>
+            <div class="timeline-dot-wrap"><div class="timeline-dot red"></div></div>
+            <div>
+              <div class="timeline-label">Pricing Threshold Gate fehlgeschlagen</div>
+              <div class="timeline-sub">Rabatt 18% &gt; Threshold 15% · Finance Review angefordert</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">10:05</div>
+            <div class="timeline-dot-wrap"><div class="timeline-dot amber"></div></div>
+            <div>
+              <div class="timeline-label">Finance Review abgeschlossen</div>
+              <div class="timeline-sub">F. Reviewer · Conditional Approve · Laufzeit max. 24 Monate</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">11:20</div>
+            <div class="timeline-dot-wrap"><div class="timeline-dot amber"></div></div>
+            <div>
+              <div class="timeline-label">Legal approved with limits</div>
+              <div class="timeline-sub">L. Reviewer · 2 risikonahe Claims eingeschränkt · Klausel-Version 4.2</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">11:43</div>
+            <div class="timeline-dot-wrap"><div class="timeline-dot accent"></div></div>
+            <div>
+              <div class="timeline-label">Sales Approver Final Approved</div>
+              <div class="timeline-sub">A. Approver · offer-v3-final.docx bestätigt</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">12:05</div>
+            <div class="timeline-dot-wrap"><div class="timeline-dot accent"></div></div>
+            <div>
+              <div class="timeline-label">Commit Action prepared · Audit Evidence closed</div>
+              <div class="timeline-sub">Send-ready Package · Internal Evidence Receipt · sha: 4a8f9c</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPT LAYER -->
+<section id="concept">
+  <div class="container">
+    <div class="section-tag"><span>Concept Layer</span> UNITERA Draft-to-Commit v1</div>
+    <h2 class="section-title">Wie ein kontrollierter <em>CommitmentRun</em> funktioniert</h2>
+    <p class="section-lead">
+      Governance-first Operating Layer für strukturierbare, kontrollierbare, reviewbare, auditierbare und traceable AI-gestützte Business Commitments.
+    </p>
+
+    <div class="concept-steps">
+      <div class="concept-step">
+        <div class="cs-num">01</div>
+        <div class="cs-icon">⬚</div>
+        <div class="cs-title">Intake Workspace</div>
+        <div class="cs-body">Commitment-Kontext, Angebotsart und beteiligte Rollen werden strukturiert erfasst.</div>
+        <div class="cs-arrow">→</div>
+      </div>
+      <div class="concept-step">
+        <div class="cs-num">02</div>
+        <div class="cs-icon">◎</div>
+        <div class="cs-title">Context Binding</div>
+        <div class="cs-body">Opportunity-, Dokument-, Regel- und Playbook-Kontext werden gebunden und versioniert.</div>
+        <div class="cs-arrow">→</div>
+      </div>
+      <div class="concept-step">
+        <div class="cs-num">03</div>
+        <div class="cs-icon">◈</div>
+        <div class="cs-title">Governed Draft</div>
+        <div class="cs-body">AI generiert den Draft mit gebundenem Kontext im kontrollierten Workspace.</div>
+        <div class="cs-arrow">→</div>
+      </div>
+      <div class="concept-step">
+        <div class="cs-num">04</div>
+        <div class="cs-icon">⊛</div>
+        <div class="cs-title">Policy Evaluation</div>
+        <div class="cs-body">Runtime-nahe Gates und illustrative Decision-Layer werden sichtbar getrennt.</div>
+        <div class="cs-arrow">→</div>
+      </div>
+      <div class="concept-step">
+        <div class="cs-num">05</div>
+        <div class="cs-icon">⊞</div>
+        <div class="cs-title">Multi-Role Review</div>
+        <div class="cs-body">Finance, Legal, Sales und Policy Owner prüfen in definierten Queues mit klaren Rollen und Eskalationspfaden.</div>
+        <div class="cs-arrow">→</div>
+      </div>
+      <div class="concept-step">
+        <div class="cs-num">06</div>
+        <div class="cs-icon">✓</div>
+        <div class="cs-title">Approval Console</div>
+        <div class="cs-body">Approve, Conditional Approve, Return, Reject oder Escalate — dokumentiert und zeitgestempelt.</div>
+        <div class="cs-arrow">→</div>
+      </div>
+      <div class="concept-step">
+        <div class="cs-num">07</div>
+        <div class="cs-icon">⊙</div>
+        <div class="cs-title">Traceable Commit</div>
+        <div class="cs-body">Commit Action bindet freigegebene Version, Payload Hash und Zielzustand. Externe Integrationen bleiben im V1-Beispiel illustrativ.</div>
+        <div class="cs-arrow">→</div>
+      </div>
+      <div class="concept-step">
+        <div class="cs-num">08</div>
+        <div class="cs-icon">≡</div>
+        <div class="cs-title">Audit Evidence Closure</div>
+        <div class="cs-body">Auditierbarer Nachweis: Kontext, Gate-Klassifikation, Reviews, Approval und Commit-Zielzustand in einer Evidence Timeline.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-tag"><span>About the Work</span></div>
+        <h2 class="section-title" style="margin-bottom: 1.5rem;">Warum diese Seite <em>existiert</em></h2>
+        <div class="about-text">
+          <p>Ich arbeite an <strong>UNITERA</strong>, einer Governance-Schicht für AI-gestützte Business Commitments. Mein Fokus liegt auf dem kontrollierten Übergang von Draft zu Review, Approval, Commit und Audit Evidence.</p>
+          <p>Diese Seite ist kein klassisches Portfolio. Sie sammelt drei Artefakte, die zeigen, wie ich den Problemraum analysiere: ein Problem Brief, eine Risk Checklist und eine Mini Audit Evidence Demo.</p>
+          <p>Die Position von UNITERA ist nicht „AI-Tool", sondern ein <strong>governance-first Operating Layer</strong> für strukturierbare, kontrollierbare, reviewbare, auditierbare und traceable AI-gestützte Business Workflows.</p>
+          <p>Evidence before compliance language. Audit before claim. Das sind die zwei Prinzipien, die die UNITERA-Doktrin prägen.</p>
+        </div>
+      </div>
+      <div class="about-sidebar">
+        <div class="about-sidebar-title">Drei Artefakte</div>
+        <a href="#problem-brief" class="artifact-card">
+          <div class="ac-num">Artifact 01</div>
+          <div class="ac-name">Problem Brief: The Draft-to-Commit Gap</div>
+        </a>
+        <a href="#checklist" class="artifact-card">
+          <div class="ac-num">Artifact 02</div>
+          <div class="ac-name">Revenue Commitment Risk Checklist</div>
+        </a>
+        <a href="#audit-pack" class="artifact-card">
+          <div class="ac-num">Artifact 03</div>
+          <div class="ac-name">Mini Audit Evidence Demo — synthetisch</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-box">
+      <div>
+        <div class="section-tag" style="margin-bottom:1rem;"><span>Gespräch</span></div>
+        <h2 class="contact-headline">Prozess-Spiegelung,<br>Checklist Review oder<br>kurze Prozess-Spiegelung.</h2>
+        <p class="contact-sub">
+          Arbeiten Sie mit AI in Angebots-, RFP- oder Change-Request-Prozessen? Die Prozess-Spiegelung prüft nur Problem- und Kontrollpunkte: keine Demo, kein Procurement-Schritt, kein Integrations- oder Compliance-Proof-Claim.
+        </p>
+      </div>
+      <div class="contact-options">
+        <a href="mailto:unitera-systems@protonmail.com?subject=UNITERA%20Prozess-Spiegelung" class="contact-option">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          Kurze Prozess-Spiegelung anfragen
+        </a>
+        <a href="#checklist" class="contact-option">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Checklist Review anfragen
+        </a>
+        <a href="mailto:unitera-systems@protonmail.com?subject=UNITERA%20Prozess-Spiegelung" class="contact-option">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Problemabgleich starten
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">UNITERA</div>
+  <div class="footer-note">
+    <span>Synthetische Demo</span>
+    Draft-to-Commit Governance Preview — synthetische Orientierung, keine Rechts-, Compliance-, Integrations- oder Kundenproof-Behauptung.
+  </div>
+</footer>
+
+<script>
+  // Checklist interaction
+  const checked = new Array(8).fill(false);
+
+  function toggleCheck(i) {
+    checked[i] = !checked[i];
+    const cb = document.getElementById('cb-' + i);
+    if (checked[i]) {
+      cb.classList.add('checked');
+    } else {
+      cb.classList.remove('checked');
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const count = checked.filter(Boolean).length;
+    const pct = Math.round((count / 8) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-score').textContent = count + ' / 8';
+  }
+
+  // Audit Evidence navigation
+  function showPanel(name, trigger) {
+    document.querySelectorAll('.audit-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.audit-nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    if (trigger) trigger.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
