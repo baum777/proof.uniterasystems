@@ -6,6 +6,11 @@
 <title>UNITERA — Draft-to-Commit Governance Preview</title>
 <meta name="description" content="Synthetische Draft-to-Commit Landing Page für AI-gestützte Revenue Commitments mit Review, Approval, Commit und Audit Evidence.">
 <meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0A0A08">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1068,6 +1073,111 @@
     color: var(--text);
   }
 
+
+  /* ASSET CTAS */
+  .asset-cta-band {
+    background: var(--bg-2);
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    padding: 3.5rem 0;
+  }
+
+  .asset-cta-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .asset-cta-title {
+    font-family: var(--serif);
+    font-size: clamp(1.7rem, 3vw, 2.35rem);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .asset-cta-note {
+    max-width: 460px;
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.65;
+  }
+
+  .asset-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .asset-download-card {
+    background: var(--bg-3);
+    padding: 1.35rem;
+    text-decoration: none;
+    min-height: 190px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .asset-download-card:hover { background: var(--bg-4); }
+
+  .asset-card-meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 0.7rem;
+  }
+
+  .asset-card-title {
+    font-size: 14px;
+    line-height: 1.35;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.45rem;
+  }
+
+  .asset-card-copy {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-2);
+  }
+
+  .asset-card-link {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 1rem;
+  }
+
+  .asset-download-card.mail-card { background: var(--accent-dim); }
+
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .asset-boundary-note {
+    margin-top: 1rem;
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.55;
+    color: var(--text-3);
+  }
+
+
   /* CONTACT */
   #contact {
     background: var(--bg);
@@ -1322,6 +1432,11 @@
     .contact-box { grid-template-columns: 1fr; gap: 2rem; }
     .summary-grid { grid-template-columns: 1fr; }
     .context-items { grid-template-columns: 1fr 1fr; }
+
+    .asset-cta-head { display: block; }
+    .asset-cta-note { margin-top: 1rem; }
+    .asset-grid { grid-template-columns: 1fr; }
+
     .checklist-table { font-size: 12px; }
     .checklist-table .check-gate,
     .checklist-table .check-owner { display: none; }
@@ -1337,9 +1452,10 @@
     <li><a href="#problem-brief">Problem Brief</a></li>
     <li><a href="#checklist">Risk Checklist</a></li>
     <li><a href="#audit-pack">Audit Evidence Demo</a></li>
+    <li><a href="#asset-ctas">PDF-Artefakte</a></li>
     <li><a href="#contact">Prozess-Spiegelung</a></li>
   </ul>
-  <a href="#checklist" class="nav-cta">Risk Checklist →</a>
+  <a href="#asset-ctas" class="nav-cta">PDF-Artefakte →</a>
 </nav>
 
 <!-- HERO -->
@@ -1355,12 +1471,58 @@
       Eine claim-sichere Konzeptseite für B2B-Unternehmen, die AI in Angebots-, RFP- oder Change-Request-Prozessen nutzen — und den Übergang von Draft zu Review, Approval, Commit und Audit Evidence kontrollierbar machen wollen.
     </p>
     <div class="hero-actions">
-      <a href="#checklist" class="btn-primary">Risk Checklist ansehen</a>
-      <a href="#audit-pack" class="btn-secondary">Mini Audit Evidence Demo öffnen</a>
+      <a href="assets/unitera-problem-brief.pdf" class="btn-primary" download>Problem Brief PDF</a>
+      <a href="assets/unitera-revenue-risk-checklist.pdf" class="btn-secondary" download>Risk Checklist PDF</a>
     </div>
     <p class="hero-trust">
       Synthetische Orientierung, keine Kundenreferenz und kein Integrationsnachweis. Drei prüfbare Artefakte zu einem konkreten Problem: Wie wird aus einem AI-generierten Draft eine verantwortbare Unternehmenszusage?
     </p>
+  </div>
+</section>
+
+
+<!-- ASSET CTAS -->
+<section id="asset-ctas" class="asset-cta-band">
+  <div class="container">
+    <div class="asset-cta-head">
+      <h2 class="asset-cta-title">Drei claim-sichere Artefakte für den ersten Problemabgleich.</h2>
+      <p class="asset-cta-note">Alle PDFs sind synthetische Orientierungsartefakte. Sie sind kein Kundenproof, keine Zertifizierung, kein Integrationsnachweis und keine Rechts- oder Compliance-Beratung.</p>
+    </div>
+    <div class="asset-grid">
+      <a href="assets/unitera-problem-brief.pdf" download class="asset-download-card">
+        <div>
+          <div class="asset-card-meta">PDF · Artifact 01</div>
+          <div class="asset-card-title">Problem Brief: Draft-to-Commit Gap</div>
+          <div class="asset-card-copy">Kurzbrief für das Grundproblem: AI-Draft, Review, Approval, Commit und Audit Evidence.</div>
+        </div>
+        <div class="asset-card-link">PDF herunterladen →</div>
+      </a>
+      <a href="assets/unitera-revenue-risk-checklist.pdf" download class="asset-download-card">
+        <div>
+          <div class="asset-card-meta">PDF · Artifact 02</div>
+          <div class="asset-card-title">Revenue Commitment Risk Checklist</div>
+          <div class="asset-card-copy">Acht Prüffragen mit klarer Trennung zwischen runtime, docs-only und evidence-nahen Gates.</div>
+        </div>
+        <div class="asset-card-link">Checklist herunterladen →</div>
+      </a>
+      <a href="assets/unitera-mini-audit-evidence-demo.pdf" download class="asset-download-card">
+        <div>
+          <div class="asset-card-meta">PDF · Artifact 03</div>
+          <div class="asset-card-title">Mini Audit Evidence Demo</div>
+          <div class="asset-card-copy">Synthetischer Commitment Run mit Gate-Klassifikation, Review, Approval und Audit Timeline.</div>
+        </div>
+        <div class="asset-card-link">Demo herunterladen →</div>
+      </a>
+      <a href="mailto:unitera-systems@protonmail.com?subject=UNITERA%20Prozess-Spiegelung&amp;body=Hallo%20UNITERA%2C%0A%0Aich%20moechte%20einen%20AI-gestuetzten%20Angebots-%2C%20RFP-%20oder%20Change-Request-Prozess%20gegen%20die%20Draft-to-Commit%20Checklist%20spiegeln.%0A%0ARelevanter%20Prozess%3A%20%0ARolle%20%2F%20Team%3A%20%0A%0AViele%20Gruesse" class="asset-download-card mail-card">
+        <div>
+          <div class="asset-card-meta">Kontakt · No Demo Claim</div>
+          <div class="asset-card-title">Prozess-Spiegelung anfragen</div>
+          <div class="asset-card-copy">Ein konkreter Ablauf wird gegen die Checklist gespiegelt: keine Demo, kein Procurement, kein Proof-Claim.</div>
+        </div>
+        <div class="asset-card-link">E-Mail vorbereiten →</div>
+      </a>
+    </div>
+    <p class="asset-boundary-note">Boundary: Diese Assets dienen dem Problemabgleich. Sie behaupten keine aktive Kundenimplementierung, keinen produktiven Integrationspfad und keine regulatorische Konformität.</p>
   </div>
 </section>
 
@@ -1492,9 +1654,9 @@
       </div>
     </div>
 
-    <a href="#" class="dl-btn" onclick="return false;">
+    <a href="assets/unitera-problem-brief.pdf" class="dl-btn" download>
       <svg viewBox="0 0 24 24"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/></svg>
-      Problem Brief als PDF vorbereiten
+      Problem Brief als PDF herunterladen
     </a>
   </div>
 </section>
@@ -1598,8 +1760,11 @@
     </table>
 
     <div class="checklist-cta">
-      <p>Wollen Sie diese Checkliste einmal gegen Ihren aktuellen Angebots- oder RFP-Prozess spiegeln? Ich kann zeigen, wo Review-, Approval- oder Audit-Lücken entstehen könnten.</p>
-      <a href="#contact" class="btn-primary">Prozess spiegeln →</a>
+      <p>Wollen Sie diese Checkliste einmal gegen Ihren aktuellen Angebots- oder RFP-Prozess spiegeln? Laden Sie die PDF herunter oder starten Sie eine kurze Prozess-Spiegelung.</p>
+      <div class="cta-row">
+        <a href="assets/unitera-revenue-risk-checklist.pdf" class="btn-secondary" download>Checklist PDF</a>
+        <a href="#contact" class="btn-primary">Prozess spiegeln →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -2011,13 +2176,13 @@
           <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           Kurze Prozess-Spiegelung anfragen
         </a>
-        <a href="#checklist" class="contact-option">
+        <a href="assets/unitera-revenue-risk-checklist.pdf" download class="contact-option">
           <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          Checklist Review anfragen
+          Checklist PDF herunterladen
         </a>
-        <a href="mailto:unitera-systems@protonmail.com?subject=UNITERA%20Prozess-Spiegelung" class="contact-option">
+        <a href="assets/unitera-mini-audit-evidence-demo.pdf" download class="contact-option">
           <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Problemabgleich starten
+          Audit Evidence PDF herunterladen
         </a>
       </div>
     </div>
