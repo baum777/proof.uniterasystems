@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>UNITERA Kontaktmatrix B2B & Claims</title>
+  <style>
+    @page { size: A4; margin: 13mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: #1f2933;
+      font-family: "DejaVu Sans", "Liberation Sans", sans-serif;
+      font-size: 9.3pt;
+      line-height: 1.34;
+      background: #ffffff;
+    }
+    h1 {
+      margin: 0 0 4mm;
+      color: #17212b;
+      font-size: 20pt;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 6mm 0 2mm;
+      color: #17212b;
+      font-size: 12pt;
+      border-top: 1px solid #c8d0d8;
+      padding-top: 3mm;
+    }
+    p { margin: 0 0 2.5mm; }
+    .meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2mm;
+      margin-bottom: 4mm;
+      color: #4a5563;
+      font-size: 8.5pt;
+    }
+    .note {
+      border-left: 4px solid #2f6f73;
+      padding: 2mm 3mm;
+      background: #eef7f6;
+      margin-bottom: 4mm;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2mm 0 4mm;
+      page-break-inside: avoid;
+    }
+    th, td {
+      border: 1px solid #d3dae1;
+      padding: 1.8mm 2mm;
+      vertical-align: top;
+    }
+    th {
+      background: #e8edf1;
+      color: #17212b;
+      font-weight: 700;
+    }
+    .tight td, .tight th { padding: 1.4mm 1.6mm; }
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2mm 3mm;
+      margin-top: 2mm;
+    }
+    .field {
+      border: 1px solid #cfd7df;
+      min-height: 12mm;
+      padding: 1.6mm;
+      background: #fbfcfd;
+    }
+    .field strong {
+      display: block;
+      color: #26313d;
+      font-size: 8.2pt;
+      margin-bottom: 1mm;
+    }
+    .field.large { min-height: 22mm; }
+    .score-row {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(4, .55fr);
+      gap: 0;
+      border: 1px solid #d3dae1;
+      border-bottom: 0;
+    }
+    .score-row div {
+      border-right: 1px solid #d3dae1;
+      border-bottom: 1px solid #d3dae1;
+      padding: 1.4mm;
+    }
+    .score-row div:last-child { border-right: 0; }
+    .muted { color: #66717d; }
+    .page-break { page-break-before: always; }
+    .footer {
+      margin-top: 4mm;
+      font-size: 8pt;
+      color: #66717d;
+    }
+  </style>
+</head>
+<body>
+  <h1>UNITERA Kontaktmatrix: B2B-Angebote & Versicherung/Claims</h1>
+  <div class="meta">
+    <div><strong>Status:</strong> working_note / decision_prep</div>
+    <div><strong>Datum:</strong> 2026-05-15</div>
+    <div><strong>Scope:</strong> Outreach-Priorisierung, keine Produkt- oder Runtime-Wahrheit</div>
+    <div><strong>Authority:</strong> canonical Repo-Regeln + proposed_import User-Kontext</div>
+  </div>
+
+  <div class="note">
+    Ziel: Kontaktpersonen außerhalb von LinkedIn priorisieren, bei denen aktive oder nahe KI-Workflow-Implementierung wahrscheinlich ist. D-A-CH-Logik: nicht über Innovation pitchen, sondern über Kontrolle, Durchlaufzeit, Fehlerreduktion und Nachvollziehbarkeit.
+  </div>
+
+  <h2>1. Segment- und Prioritätsmatrix</h2>
+  <table>
+    <thead>
+      <tr><th>Segment</th><th>Zielrollen</th><th>Primärer Schmerz</th><th>Relevante Signale</th><th>Priorität</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>B2B-Angebotsmanagement</td><td>Head of Sales Operations, RevOps, Bid Manager, Angebotsmanagement</td><td>Lange Angebotszyklen, manuelle Freigaben, CRM/ERP-Brüche</td><td>CPQ, Quote-to-Cash, Deal Desk, Angebotsautomatisierung</td><td>Hoch</td></tr>
+      <tr><td>B2B-Vertrieb komplexer Produkte</td><td>Head of Sales, Presales, Technical Sales, Commercial Operations</td><td>Sonderpreise, technische Klärungen, Vertragsabweichungen</td><td>Salesforce, HubSpot, SAP, Microsoft Dynamics, DealHub, Conga</td><td>Hoch</td></tr>
+      <tr><td>Versicherung Claims</td><td>Head of Claims, Claims Operations, Schadenmanagement, Claims Transformation</td><td>Rückstände, Dokumentenprüfung, Eskalationen, SLA-Druck</td><td>Claims Automation, Document AI, Guidewire, UiPath, ServiceNow</td><td>Hoch</td></tr>
+      <tr><td>Versicherung Backoffice</td><td>COO Office, Operations Excellence, Prozessmanagement, IT Business Partner</td><td>Medienbrüche, Kostenquote, manuelle Kontrollen</td><td>Process Mining, RPA, Workflow Automation, SAP FS</td><td>Hoch</td></tr>
+      <tr><td>Versicherung Compliance / Audit</td><td>Compliance Ops, Risk, Datenschutz, Internal Audit</td><td>Blackbox-Risiko, Nachvollziehbarkeit, Verantwortlichkeit</td><td>Audit Trail, Governance, Human-in-the-loop, Freigabelogik</td><td>Mittel bis hoch</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2. Signal-Matrix</h2>
+  <table class="tight">
+    <thead>
+      <tr><th>Signalquelle</th><th>Dokumentieren</th><th>Stärke</th><th>Beispiel-Suchbegriffe</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Jobanzeigen</td><td>Rollen, Tools, Prozessbegriffe, Teamzuständigkeit</td><td>5</td><td>Claims Automation, RevOps, CPQ, Power Automate, RPA</td></tr>
+      <tr><td>Vendor-Webinare</td><td>Speaker, Firmenname, Use Case, Projektrolle</td><td>5</td><td>Guidewire, UiPath, Celonis, ServiceNow, Salesforce</td></tr>
+      <tr><td>Case Studies</td><td>Kunde, Problem, Tool, Ergebnisbehauptung</td><td>4</td><td>Quote-to-Cash, Claims Transformation, Process Mining</td></tr>
+      <tr><td>Konferenzprogramme</td><td>Vortragstitel, Rolle, Firma, Prozessbezug</td><td>4</td><td>Schadenmanagement, Sales Excellence, Operations Excellence</td></tr>
+      <tr><td>Vergabeportale</td><td>Ausschreibungstitel, Budgetnähe, Leistungsbeschreibung</td><td>5</td><td>Dokumentenautomation, KI Assistenz, Workflow</td></tr>
+      <tr><td>Tool-Communities</td><td>Implementierer, technische Fragestellung, Stack</td><td>3</td><td>n8n, Power Platform, UiPath Community</td></tr>
+      <tr><td>Firmen-Newsroom</td><td>Rollout-Meldung, Partnerschaft, Transformationsprogramm</td><td>3</td><td>führt Copilot ein, digitalisiert Schadenprozess</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3. Scoring-Modell</h2>
+  <table class="tight">
+    <thead>
+      <tr><th>Kriterium</th><th>0 Punkte</th><th>1 Punkt</th><th>2 Punkte</th><th>3 Punkte</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Prozessdruck</td><td>nicht sichtbar</td><td>allgemein erwähnt</td><td>konkreter Prozess betroffen</td><td>messbarer Engpass oder Rückstand</td></tr>
+      <tr><td>Tool-/Vendor-Spur</td><td>keine</td><td>generische Digitalisierung</td><td>konkretes Tool sichtbar</td><td>Tool plus Projekt-/Rollout-Kontext</td></tr>
+      <tr><td>Rollenfit</td><td>unklar</td><td>Strategie/Innovation</td><td>operative Prozessrolle</td><td>Budget- oder Ergebnisverantwortung</td></tr>
+      <tr><td>Governance-Bedarf</td><td>keiner sichtbar</td><td>indirekt möglich</td><td>regulierter Prozess</td><td>Audit, Freigabe, Risiko oder Compliance klar sichtbar</td></tr>
+      <tr><td>Implementierungsnähe</td><td>abstrakt</td><td>Pilot erwähnt</td><td>Use Case aktiv</td><td>Rollout, Betrieb oder Ausschreibung sichtbar</td></tr>
+      <tr><td>UNITERA-Fit</td><td>schwach</td><td>teilweise</td><td>klarer Workflow-Fit</td><td>Workflow plus Nachweis-/Commitment-Bedarf</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Score:</strong> 0-5 niedrig · 6-9 beobachten · 10-13 relevant · 14-16 hoch · 17-18 sehr hoch.</p>
+
+  <div class="page-break"></div>
+  <h2>4. Eingabefeld-Logik für jeden Kontakt</h2>
+  <div class="field-grid">
+    <div class="field"><strong>Firma</strong></div>
+    <div class="field"><strong>Segment</strong>B2B-Angebot / B2B-Vertrieb / Claims / Backoffice / Compliance</div>
+    <div class="field"><strong>Kontaktrolle</strong></div>
+    <div class="field"><strong>Quelle</strong>Jobanzeige / Webinar / Case Study / Ausschreibung / Konferenz / Newsroom</div>
+    <div class="field large"><strong>Observed Signal</strong>Nur belegte Information eintragen.</div>
+    <div class="field large"><strong>Inferred Need</strong>Plausible Ableitung getrennt vom Signal notieren.</div>
+    <div class="field"><strong>Prozessschmerz</strong></div>
+    <div class="field"><strong>Tool-Spur</strong></div>
+    <div class="field"><strong>Governance-Spur</strong>Freigabe / Audit / Risiko / Compliance / Verantwortlichkeit</div>
+    <div class="field"><strong>Outreach-Hypothese</strong>Warum könnte diese Person antworten?</div>
+  </div>
+
+  <h2>5. Kontakt-Scoring-Blatt</h2>
+  <div class="score-row"><div><strong>Kriterium</strong></div><div><strong>0</strong></div><div><strong>1</strong></div><div><strong>2</strong></div><div><strong>3</strong></div></div>
+  <div class="score-row"><div>Prozessdruck</div><div></div><div></div><div></div><div></div></div>
+  <div class="score-row"><div>Tool-/Vendor-Spur</div><div></div><div></div><div></div><div></div></div>
+  <div class="score-row"><div>Rollenfit</div><div></div><div></div><div></div><div></div></div>
+  <div class="score-row"><div>Governance-Bedarf</div><div></div><div></div><div></div><div></div></div>
+  <div class="score-row"><div>Implementierungsnähe</div><div></div><div></div><div></div><div></div></div>
+  <div class="score-row"><div>UNITERA-Fit</div><div></div><div></div><div></div><div></div></div>
+
+  <div class="field-grid">
+    <div class="field"><strong>Gesamtscore</strong></div>
+    <div class="field"><strong>Priorität</strong>Niedrig / Beobachten / Relevant / Hoch / Sehr hoch</div>
+    <div class="field large"><strong>Erste Nachricht</strong></div>
+    <div class="field large"><strong>Next Gate</strong></div>
+  </div>
+
+  <h2>6. Boundary</h2>
+  <p class="muted">Diese Matrix ist ein Planungs- und Priorisierungsartefakt. Sie erzeugt keine Customer-Proof-, ROI-, Compliance-, Integrations- oder Produktwahrheit.</p>
+  <div class="footer">UNITERA · Read-only Planning Asset · 2026-05-15</div>
+</body>
+</html>
