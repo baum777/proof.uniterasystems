@@ -27,6 +27,7 @@ If implementation becomes necessary, produce a separate implementation prompt an
 Collect the relevant inputs:
 
 - canonical repo files
+- `wiki/strategy/chat-trigger-map-memory-logic.md` for chat-trigger route rules
 - proposed strategy imports
 - prior conversation summaries
 - wiki entries

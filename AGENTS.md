@@ -99,6 +99,9 @@ Agents must keep these separations explicit:
 
 The repository may use a `wiki/` or `docs/wiki/` space for structured thinking.
 
+Route reference for chat-triggered memory planning:
+- `wiki/strategy/chat-trigger-map-memory-logic.md` (planning authority for trigger syntax and recording flow)
+
 Wiki entries should capture:
 
 - question or tension
