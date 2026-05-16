@@ -1,11 +1,11 @@
 # UNITERA — AGENTS.md
 
 ## Status
-Read-only planning policy for the repository root.
+Repository root guidance for planning und implementation.
 
-This file defines how agents work in this repository while the project is in **SOT Meta Planning / Strategy Diary Mode**.
+This file defines how agents work in this repository while the project is in **design, implementation, and verification mode**.
 
-The purpose is to deepen UNITERA strategy, naming, governance, evidence, and outreach logic without changing runtime code, product implementation, API behavior, schema, routes, packages, or deployment surfaces.
+The purpose is to deepen UNITERA strategy, naming, governance, evidence, outreach logic, and the related implementation surfaces in a controlled way.
 
 ---
 
@@ -26,9 +26,9 @@ Product labels may guide planning language, but they must not create Domain, API
 
 ---
 
-## 2. Read-Only Mode
+## 2. Implementation Mode
 
-Read-only mode means:
+Implementation mode means:
 
 Allowed:
 
@@ -52,7 +52,7 @@ Not allowed:
 - convert planning language into implementation truth
 - claim compliance, certification, production-readiness, integration proof, customer proof, or ROI evidence without runtime-backed evidence
 
-If a task requires implementation, the agent must stop and produce an implementation prompt or handoff instead of changing code.
+Implementation work must still stay scoped, evidence-based, and reviewable. When a task is risky or touches shared surfaces, prefer a small patch plus verification instead of broad refactors.
 
 ---
 
@@ -133,7 +133,7 @@ Every non-trivial agent response should include:
 - findings or proposed framing
 - open questions
 - risk of overclaiming
-- next smallest read-only step
+- next smallest step
 
 Do not state that a decision is final unless a canonical file or explicit human decision makes it final.
 
@@ -156,14 +156,14 @@ Agents must not:
 
 ## 8. Definition of Done
 
-A read-only planning task is complete only when:
+An implementation-aware planning task is complete only when:
 
 1. Sources are classified by authority.
 2. Findings stay inside planning / wiki / diary scope.
-3. Runtime, API, Domain, DB, route, and package behavior remain untouched.
+3. Runtime, API, Domain, DB, route, and package behavior are intentionally changed only when the task requires it.
 4. Open questions are explicitly marked.
 5. Claims are bounded by evidence.
-6. A next read-only step or handoff prompt is provided.
+6. A next step, verification note, or handoff prompt is provided.
 
 ---
 

@@ -1,10 +1,10 @@
-# UNITERA Read-Only Planning Workflow
+# UNITERA Planning and Implementation Workflow
 
 ## Status
 
 Workflow for strategy planning, wiki documentation, and diary-style logging.
 
-This workflow is intentionally read-only with respect to runtime, API, Domain, DB, schema, routes, packages, deployment, and product implementation.
+This workflow supports planning, implementation, and verification with respect to runtime, API, Domain, DB, schema, routes, packages, deployment, and product surfaces.
 
 ---
 
@@ -16,9 +16,7 @@ Every planning task follows:
 READ -> CLASSIFY -> SYNTHESIZE -> RECORD -> REVIEW -> NEXT
 ```
 
-No implementation step exists in this workflow.
-
-If implementation becomes necessary, produce a separate implementation prompt and stop.
+Implementation is allowed when the task requires it, but the change should stay scoped and verifiable.
 
 ---
 
@@ -69,7 +67,7 @@ Also classify the layer:
 
 ## 4. SYNTHESIZE
 
-Create a planning result, not an implementation plan.
+Create a planning result or an implementation-ready result, depending on the task.
 
 A good synthesis states:
 
@@ -86,7 +84,7 @@ Avoid:
 - migration plans
 - runtime routes
 - schema proposals
-- implementation tasks
+- uncontrolled implementation tasks
 - product expansion claims
 
 ---
@@ -141,8 +139,8 @@ What is unresolved?
 ### What must not be inferred
 What would be overclaiming?
 
-### Next read-only step
-What should be planned or documented next?
+### Next step
+What should be planned, documented, or implemented next?
 ```
 
 Diary entries are append-only. Do not rewrite previous entries except to add a correction note.
@@ -164,7 +162,7 @@ Before closing a planning task, ask:
 
 ## 7. NEXT
 
-Close with one next read-only step:
+Close with one next step:
 
 Examples:
 
@@ -175,7 +173,7 @@ Examples:
 - summarize an outreach insight
 - prepare an implementation prompt without executing it
 
-Do not chain into implementation automatically.
+Do not chain into implementation automatically without confirming scope.
 
 ---
 
@@ -213,16 +211,11 @@ Allowed file changes in this mode:
 - diary log entries
 - planning notes
 - decision-prep matrices
+- implementation code when requested
 
 Disallowed file changes in this mode:
 
-- runtime code
-- API contracts
-- DB schema
-- package structure
-- routes
-- deployment config
-- implementation docs that imply approval
+- hidden or undocumented behavior changes
 
 ---
 
@@ -236,7 +229,7 @@ A planning cycle is complete when:
 4. Open decisions are listed.
 5. Overclaiming risks are marked.
 6. No implementation was performed.
-7. The next step stays read-only or is handed off as a separate implementation prompt.
+7. The next step stays scoped or is handed off as a separate implementation prompt.
 
 ---
 
