@@ -133,7 +133,7 @@ Every non-trivial agent response should include:
 - findings or proposed framing
 - open questions
 - risk of overclaiming
-- next smallest step
+- nächster Checkpoint oder Arbeitsblock (nur wenn relevant: bei Risiko, Entscheidung oder Abschluss — kein automatischer Schritt nach jedem Pass)
 
 Do not state that a decision is final unless a canonical file or explicit human decision makes it final.
 
