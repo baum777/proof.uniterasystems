@@ -133,7 +133,7 @@ Every non-trivial agent response should include:
 - findings or proposed framing
 - open questions
 - risk of overclaiming
-- next smallest step
+- nächster Checkpoint oder Arbeitsblock (nur wenn relevant: bei Risiko, Entscheidung oder Abschluss — kein automatischer Schritt nach jedem Pass)
 
 Do not state that a decision is final unless a canonical file or explicit human decision makes it final.
 
@@ -168,6 +168,23 @@ An implementation-aware planning task is complete only when:
 ---
 
 End of AGENTS.md
+
+## Registry Disposition Consumer Binding
+
+Before completing a run, classify its Registry consequence against the Shared-Core-owned `registry-disposition.v1` contract. Resolve the policy, schema, and validator from `model-agnostic-workflow-system/docs/governance/registry-disposition.md`, `model-agnostic-workflow-system/core/contracts/registry-disposition.schema.json`, and `model-agnostic-workflow-system/scripts/tools/validate-registry-disposition.mjs`.
+
+Required sequence:
+
+1. Determine `material_change`.
+2. Determine `registry_relevant_change` only through this repo's currently adopted class: `PROVENANCE`.
+3. Produce an evidence-backed `registry_disposition` and validate it before claiming completion.
+4. Use `NO_CHANGE` when provenance did not change; no Registry write is required.
+5. Use `UPDATED` only when a Registry write is complete and evidenced by `registry_commit_sha`.
+6. Use `REQUIRED_BUT_BLOCKED` when a required Registry update cannot be completed.
+
+This binding is limited to provenance of already registered evidence. It does not create or require a claim inventory, make evidence an authority, turn the Registry into a run log, create ownership, or establish runtime truth.
+
+This binding and any Registry disposition are interpretive governance only: they grant no capability, execution, or control-plane authority or permission and do not mutate the Registry.
 
 <!-- workspace-root-sync:agents:start -->
 ## Workspace Root Integration
